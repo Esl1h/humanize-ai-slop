@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace-manifest.json",
+  "name": "humanize-ai-slop",
+  "owner": {
+    "name": "Esl1h",
+    "url": "https://github.com/Esl1h"
+  },
+  "description": "Install Humanize AI Slop as a Claude Code plugin.",
+  "plugins": [
+    {
+      "name": "humanize-ai-slop",
+      "source": "./",
+      "description": "Rewrite AI-sounding text so it reads like a person wrote it, or flag AI patterns without rewriting.",
+      "license": "MIT",
+      "keywords": ["writing", "editing", "ai-detection", "humanize", "ai-slop", "prose", "style"]
+    }
+  ]
+}

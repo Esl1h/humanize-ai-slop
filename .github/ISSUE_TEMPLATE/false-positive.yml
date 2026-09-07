@@ -1,0 +1,26 @@
+name: False positive
+description: A pattern flagged something that should not have been flagged.
+title: "[false positive] "
+labels: ["false positive"]
+body:
+  - type: input
+    id: pattern
+    attributes:
+      label: Pattern number
+      description: Which of the 39 patterns in SKILL.md flagged it wrongly?
+    validations:
+      required: true
+  - type: textarea
+    id: excerpt
+    attributes:
+      label: Flagged excerpt
+      description: Paste the excerpt that was flagged as AI-sounding without being so.
+    validations:
+      required: true
+  - type: textarea
+    id: reason
+    attributes:
+      label: Why is this not a sign of AI?
+      description: Explain the context that makes this excerpt legitimate.
+    validations:
+      required: true

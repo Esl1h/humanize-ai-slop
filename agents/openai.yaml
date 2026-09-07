@@ -1,0 +1,4 @@
+interface:
+  display_name: "/humanize-ai-slop"
+  short_description: "Remove AI writing patterns from a draft while preserving the writer's voice."
+  default_prompt: "Use $humanize-ai-slop to remove AI patterns from this text while preserving my personal voice."

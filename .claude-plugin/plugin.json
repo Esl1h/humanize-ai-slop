@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "humanize-ai-slop",
+  "description": "Rewrite AI-sounding text so it reads like a person wrote it, or flag AI patterns without rewriting.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Esl1h",
+    "url": "https://github.com/Esl1h"
+  },
+  "homepage": "https://github.com/Esl1h/humanize-ai-slop",
+  "repository": "https://github.com/Esl1h/humanize-ai-slop",
+  "license": "MIT",
+  "keywords": ["writing", "editing", "ai-detection", "humanize", "ai-slop", "prose", "style"],
+  "skills": ["./"]
+}
