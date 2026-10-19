@@ -2,7 +2,7 @@
 
 Use this after the rewrite. Answer each check with pass or fail. If any check fails, fix the draft before returning it.
 
-For detect requests, make sure the response names each pattern found with a quoted line and a short fix, without rewriting the draft.
+For detect requests, make sure the response names each pattern found with a quoted line and a short fix, ends with one summary line, and does not rewrite the draft.
 
 ## Editing principles
 
@@ -43,5 +43,5 @@ For detect requests, make sure the response names each pattern found with a quot
 2. Would the writer recognize the edited draft as their own voice?
 3. Would the edited draft sound natural if read aloud to a sharp colleague?
 4. Does the final output include the full edited draft and a short **What changed** section?
-5. For detect requests, does the response name each pattern with a quoted line and a short fix, without rewriting, scoring, or claiming AI authorship?
-6. In file mode, when the bundled scanner is available, does `scripts/slop_scan.py` report nothing on the rewritten file?
+5. For detect requests, does the response name each pattern with a quoted line and a short fix, end with a summary line of findings, patterns, and where they cluster, and avoid rewriting, scoring, or claiming AI authorship?
+6. In file mode, when the bundled scanner is available, does `scripts/slop_scan.py` report no `fix` finding on the rewritten file, and was each `watch` finding either fixed or judged fine in context?
