@@ -10,8 +10,10 @@ Keep the skill portable. Do not write instructions that limit it to one or two s
 
 ## Main files
 
-- `SKILL.md` is the source of truth and the only skill file in the repository. It contains portable YAML metadata, 39 numbered patterns with examples, and the rewrite process.
+- `SKILL.md` is the source of truth and the only skill file in the repository. It contains portable YAML metadata, 41 numbered patterns with examples, and the rewrite process.
 - `eval.md` contains the self-check list the skill runs on its own work before returning the result.
+- `scripts/slop_scan.py` scans text for the mechanical patterns (banned words, dashes, decorated headings, mixed quotes, bold-label lists) and reads its word lists from `SKILL.md`.
+- `evals/` holds fixtures with planted patterns, golden rewrites, a grader (`run_evals.py`), and agent eval prompts (`evals.json`).
 - `README.md` explains installation, usage, patterns, and version history.
 - `.claude-plugin/plugin.json` describes the Claude Code plugin and points the skill loader at the root `SKILL.md`.
 - `.claude-plugin/marketplace.json` lets users add this repository as a Claude marketplace.
@@ -24,12 +26,12 @@ Keep the skill portable. Do not write instructions that limit it to one or two s
 
 Keep `SKILL.md`, `eval.md`, and `README.md` in sync.
 
-- **Patterns:** the skill has 39 numbered patterns in seven categories. When you add, remove, or renumber a pattern, update the README table, the section heading, the validator, and every reference to the pattern number.
+- **Patterns:** the skill has 41 numbered patterns in seven categories. When you add, remove, or renumber a pattern, update the README table, the pattern index in SKILL.md, the validator, the pattern numbers reported by `scripts/slop_scan.py`, and every reference to the pattern number.
 - **Version:** keep the same version in `SKILL.md` under `metadata.version`, in the first version entry of the README, in `.claude-plugin/plugin.json`, and in `.codex-plugin/plugin.json`. Do not add a top-level `version` field to the skill.
 - **Compatibility:** keep installation and usage instructions neutral across agents. Names such as Claude Code, ChatGPT, and Codex are examples, not limits.
 - **History:** add a short version note to the README for every behavior change or non-obvious fix.
 - **Merging:** when a Humanizer pattern and a No AI Slop pattern describe the same habit, keep one numbered pattern and fold the second source's example or wording into it. Do not add a near-duplicate pattern.
-- **Checks:** before publishing, run `python3 scripts/validate-package.py`.
+- **Checks:** before publishing, run `python3 scripts/validate-package.py` and `python3 evals/run_evals.py`.
 
 ## Writing style
 

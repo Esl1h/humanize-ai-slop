@@ -7,14 +7,14 @@ Humanize AI Slop is a derivative work. It merges and reorganizes the content of 
 - Repository: [github.com/blader/humanizer](https://github.com/blader/humanizer)
 - Copyright (c) 2025 Siqi Chen
 - License: MIT
-- What was used: the 35 numbered patterns based on Wikipedia's ["Signs of AI writing"](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) with their examples, the rewrite process, voice matching from a writing sample, the rule against invented facts, the three output modes, and the sections on false positives and human details to keep.
+- What was used: the 35 numbered patterns based on Wikipedia's ["Signs of AI writing"](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) with their examples, the rewrite process, voice matching from a writing sample, the rule against invented facts, the three output modes, and the sections on false positives and human details to keep. Later v3 revisions of Humanizer contributed the vague-association and wrong-reader patterns (6 and 24) and wording folded into patterns 32 and 40.
 
 ## No AI Slop
 
 - Repository: [github.com/petergyang/no-ai-slop](https://github.com/petergyang/no-ai-slop)
 - Copyright (c) 2026 Peter Yang
 - License: MIT
-- What was used: the detect mode, the editing principles (portability test, protecting the specific fact, and others), the lists of words and phrases to watch, the self-check list in `eval.md`, and the rhetorical patterns that became sections 32, 33, 36, 37, 38, and 39 of `SKILL.md`, plus wording folded into patterns 1, 3, 5, 8, 9, 11, 13, 14, 25, 28, and 31.
+- What was used: the detect mode, the editing principles (portability test, protecting the specific fact, and others), the lists of words and phrases to watch, the self-check list in `eval.md`, and the rhetorical patterns that became sections 34, 35, 38, 39, 40, and 41 of `SKILL.md`, plus wording folded into patterns 1, 3, 5, 9, 10, 12, 15, 16, 27, 30, and 33.
 
 ## Humanize BR
 

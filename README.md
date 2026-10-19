@@ -4,14 +4,14 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-ff7a59.svg" alt="MIT license"></a>
-  <a href="#the-39-patterns"><img src="https://img.shields.io/badge/patterns-39-ff7a59.svg" alt="39 patterns"></a>
+  <a href="#the-41-patterns"><img src="https://img.shields.io/badge/patterns-41-ff7a59.svg" alt="41 patterns"></a>
   <a href="https://github.com/Esl1h/humanize-ai-slop/stargazers"><img src="https://img.shields.io/github/stars/Esl1h/humanize-ai-slop?style=social" alt="GitHub stars"></a>
   <a href="https://github.com/Esl1h/humanize-ai-slop/network/members"><img src="https://img.shields.io/github/forks/Esl1h/humanize-ai-slop?style=social" alt="GitHub forks"></a>
 </p>
 
 # Humanize AI Slop
 
-Humanize AI Slop rewrites AI-sounding text so it reads like a person wrote it, without changing what it says. It merges two of the most used writing skills for this job, [Humanizer](https://github.com/blader/humanizer) and [No AI Slop](https://github.com/petergyang/no-ai-slop), into one English skill of 39 patterns, following the layout of [Humanize BR](https://github.com/Esl1h/humanize-br), which did the same merge for Brazilian Portuguese. Because it is just Markdown, it works with any agent that supports skills: Claude Code, ChatGPT, Codex, and others.
+Humanize AI Slop rewrites AI-sounding text so it reads like a person wrote it, without changing what it says. It merges two of the most used writing skills for this job, [Humanizer](https://github.com/blader/humanizer) and [No AI Slop](https://github.com/petergyang/no-ai-slop), into one English skill of 41 patterns, following the layout of [Humanize BR](https://github.com/Esl1h/humanize-br), which did the same merge for Brazilian Portuguese. Because it is just Markdown, it works with any agent that supports skills: Claude Code, ChatGPT, Codex, and others.
 
 ## The problem
 
@@ -66,7 +66,7 @@ Now humanize this text:
 [paste the AI text here]
 ```
 
-The skill follows the sample's rhythm, word choice, punctuation, and deliberate quirks, including how often you use em dashes, and it stops treating pattern 14 as a ban when the sample already uses them.
+The skill follows the sample's rhythm, word choice, punctuation, and deliberate quirks, including how often you use em dashes, and it stops treating pattern 15 as a ban when the sample already uses them.
 
 ## Installation
 
@@ -96,9 +96,32 @@ https://github.com/Esl1h/humanize-ai-slop
 
 **In Claude Desktop**, download this repository as a ZIP and upload it as a skill.
 
-**Manual install:** copy `SKILL.md` into your agent's skill folder.
+**Manual install:** copy `SKILL.md` and `eval.md` into your agent's skill folder, plus `scripts/` if you want the mechanical scanner.
 
-## The 39 patterns
+## The mechanical scanner
+
+The repo bundles `scripts/slop_scan.py`, a dependency-free scanner for the checks a machine can make: banned words, em and en dashes, decorated headings, mixed quote styles, bold-label lists, and stacked hyphen pairs. It reads its word lists from `SKILL.md`, so it never drifts from the skill. The rhetorical patterns still need the model.
+
+```bash
+python3 scripts/slop_scan.py docs/launch-post.md   # list findings with pattern numbers
+python3 scripts/slop_scan.py - < draft.txt         # scan stdin
+python3 scripts/slop_scan.py clean.md --strict     # exit 1 on any finding
+```
+
+The skill runs the scanner in detect mode and after file edits whenever it is installed with the repo.
+
+## Tests
+
+`evals/` holds fixtures with planted patterns, golden rewrites, and a grader:
+
+```bash
+python3 evals/run_evals.py                                          # self-checks (CI)
+python3 evals/run_evals.py --grade evals/fixtures/shellmate.md out.md
+```
+
+`evals/evals.json` lists prompts and assertions for running the full skill with an agent. CI runs the self-checks on every push.
+
+## The 41 patterns
 
 ### Content patterns
 
@@ -109,70 +132,72 @@ https://github.com/Esl1h/humanize-ai-slop
 | 3 | **Shallow -ing analysis** | "symbolizing... reflecting... showcasing..." | Keep only what the source supports |
 | 4 | **Sales language** | "nestled within the breathtaking region" | "is a town in the Gonder region" |
 | 5 | **Vague sources and weasel attribution** | "experts believe it plays a crucial role" | Name a real source or remove the claim |
-| 6 | **Formulaic challenges and outlook** | "despite challenges... continues to thrive" | Keep the facts, drop the pitch |
+| 6 | **Vague connection or association** | "is associated with", "in connection with" | Name the relationship the source gives |
+| 7 | **Formulaic challenges and outlook** | "despite challenges... continues to thrive" | Keep the facts, drop the pitch |
 
 ### Language and grammar patterns
 
 | # | Pattern | Before | After |
 |---|---------|--------|-------|
-| 7 | **Overused AI words** | "additionally... enduring testament... culinary landscape" | "also... remain common" |
-| 8 | **Avoiding is, are, and has** | "serves as... features... boasts" | "is... has" |
-| 9 | **Not X but Y, binary contrasts, negative listing** | "It's not just a song, it's a statement" / "Not a X. Not a Y. A Z." | State the point directly |
-| 10 | **Forced groups of three** | "innovation, inspiration, and insights" | Use the number of items the meaning needs |
-| 11 | **Synonym cycling and repeated openings** | "the agent... the assistant... the tool" | Use one name for the same subject |
-| 12 | **False from X to Y ranges** | "from the Big Bang to dark matter" | List the topics directly |
-| 13 | **Passive voice and missing subjects** | "No configuration file needed" | "You do not need a configuration file" |
+| 8 | **Overused AI words** | "additionally... enduring testament... culinary landscape" | "also... remain common" |
+| 9 | **Avoiding is, are, and has** | "serves as... features... boasts" | "is... has" |
+| 10 | **Not X but Y, binary contrasts, negative listing** | "It's not just a song, it's a statement" / "Not a X. Not a Y. A Z." | State the point directly |
+| 11 | **Forced groups of three** | "innovation, inspiration, and insights" | Use the number of items the meaning needs |
+| 12 | **Synonym cycling and repeated openings** | "the agent... the assistant... the tool" | Use one name for the same subject |
+| 13 | **False from X to Y ranges** | "from the Big Bang to dark matter" | List the topics directly |
+| 14 | **Passive voice and missing subjects** | "No configuration file needed" | "You do not need a configuration file" |
 
 ### Style and formatting patterns
 
 | # | Pattern | Before | After |
 |---|---------|--------|-------|
-| 14 | **Em and en dashes** | "institutions—not the people—yet this continues—" | Periods, commas, colons, or parentheses |
-| 15 | **Too much bold text** | "**OKRs**, **KPIs**, **BMC**" | "OKRs, KPIs, BMC" |
-| 16 | **Lists with bold mini-headings** | "**Performance:** Performance improved" | Use prose when a list adds no value |
-| 17 | **Title case in headings** | "## Strategic Negotiations And Partnerships" | "## Strategic negotiations and partnerships" |
-| 18 | **Emojis** | "🚀 Launch Phase: 💡 Key Insight:" | Remove the emojis |
-| 19 | **Curly quotes and mixed quote styles** | `said “the project”` mixed with `said "the"` | Match the writer or target format, and stay consistent |
+| 15 | **Em and en dashes** | "institutions—not the people—yet this continues—" | Periods, commas, colons, or parentheses |
+| 16 | **Too much bold text** | "**OKRs**, **KPIs**, **BMC**" | "OKRs, KPIs, BMC" |
+| 17 | **Lists with bold mini-headings** | "**Performance:** Performance improved" | Use prose when a list adds no value |
+| 18 | **Title case in headings** | "## Strategic Negotiations And Partnerships" | "## Strategic negotiations and partnerships" |
+| 19 | **Emojis** | "🚀 Launch Phase: 💡 Key Insight:" | Remove the emojis |
+| 20 | **Curly quotes and mixed quote styles** | `said “the project”` mixed with `said "the"` | Match the writer or target format, and stay consistent |
 
 ### Chatbot patterns
 
 | # | Pattern | Before | After |
 |---|---------|--------|-------|
-| 20 | **Chatbot text left in the answer** | "I hope this helps! Let me know if..." | Remove it |
-| 21 | **Knowledge-limit disclaimers and guesses** | "while details are limited... it appears to have been..." | State what the source shows, or remove the claim |
-| 22 | **Overly agreeable tone** | "Great question! You're absolutely right!" | Answer directly |
+| 21 | **Chatbot text left in the answer** | "I hope this helps! Let me know if..." | Remove it |
+| 22 | **Knowledge-limit disclaimers and guesses** | "while details are limited... it appears to have been..." | State what the source shows, or remove the claim |
+| 23 | **Overly agreeable tone** | "Great question! You're absolutely right!" | Answer directly |
+| 24 | **Re-explaining what the reader knows** | reply that rebuilds the thread's context before the decision | Lead with the decision |
 
 ### Filler, hedging, and endings
 
 | # | Pattern | Before | After |
 |---|---------|--------|-------|
-| 23 | **Filler phrases** | "in order to", "due to the fact that" | "to", "because" |
-| 24 | **Too many qualifiers** | "could potentially possibly" | "may" |
-| 25 | **Generic positive endings and summary recaps** | "The future looks bright... In conclusion..." | End on the last concrete fact |
+| 25 | **Filler phrases** | "in order to", "due to the fact that" | "to", "because" |
+| 26 | **Too many qualifiers** | "could potentially possibly" | "may" |
+| 27 | **Generic positive endings and summary recaps** | "The future looks bright... In conclusion..." | End on the last concrete fact |
 
 ### Hyphenation
 
 | # | Pattern | Before | After |
 |---|---------|--------|-------|
-| 26 | **Too many hyphenated word pairs** | "customer-centric, data-driven, state-of-the-art" | Keep only the hyphens grammar needs |
+| 28 | **Too many hyphenated word pairs** | "customer-centric, data-driven, state-of-the-art" | Keep only the hyphens grammar needs |
 
 ### Fake depth and rhetoric
 
 | # | Pattern | Before | After |
 |---|---------|--------|-------|
-| 27 | **Pretending to reveal a deeper truth** | "at its core, what really matters is..." | State the point directly |
-| 28 | **Announcing the next point and rhetorical setups** | "let's dive in", "what if I told you..." | Start with the content |
-| 29 | **A heading repeated below itself** | "## Performance" + "Speed matters." | Let the heading do the work |
-| 30 | **Writing about the previous version** | "this function was added to replace..." | Describe what it does now |
-| 31 | **Forced punchlines, fragments, robotic rhythm** | "No preference. No prior. No nostalgia." | Use natural sentence lengths |
-| 32 | **Formulaic sayings and fake-profound kickers** | "The future isn't coming. It's already here." | Delete it, end on the last concrete sentence |
-| 33 | **Fake-candid and throat-clearing openers** | "Honestly? Here's the thing..." | State the answer directly |
-| 34 | **Answering objections no one raised** | "I'm not saying... but..." | Remove the unsupported defense |
-| 35 | **Rejecting fake alternatives** | "A tempting option would be..., but" | State the real constraint |
-| 36 | **Colon reveals** | "The detail that makes it work: a separate agent" | Rewrite as a plain sentence |
-| 37 | **Interpretive metadiscourse** | "That last part matters more than it sounds" | Delete the aside |
-| 38 | **Formatting slop** | emoji headings, decorative bold, bullets for two sentences | Format follows the content |
-| 39 | **Faux-insight setups** | "Here's what nobody tells you: ..." | Cut the setup, keep the claim |
+| 29 | **Pretending to reveal a deeper truth** | "at its core, what really matters is..." | State the point directly |
+| 30 | **Announcing the next point and rhetorical setups** | "let's dive in", "what if I told you..." | Start with the content |
+| 31 | **A heading repeated below itself** | "## Performance" + "Speed matters." | Let the heading do the work |
+| 32 | **Writing about the document instead of its subject** | "was added to replace...", "the table below compares" | Describe the subject, not the document |
+| 33 | **Forced punchlines, fragments, robotic rhythm** | "No preference. No prior. No nostalgia." | Use natural sentence lengths |
+| 34 | **Formulaic sayings and fake-profound kickers** | "The future isn't coming. It's already here." | Delete it, end on the last concrete sentence |
+| 35 | **Fake-candid and throat-clearing openers** | "Honestly? Here's the thing..." | State the answer directly |
+| 36 | **Answering objections no one raised** | "I'm not saying... but..." | Remove the unsupported defense |
+| 37 | **Rejecting fake alternatives** | "A tempting option would be..., but" | State the real constraint |
+| 38 | **Colon reveals** | "The detail that makes it work: a separate agent" | Rewrite as a plain sentence |
+| 39 | **Interpretive metadiscourse** | "That last part matters more than it sounds" | Delete the aside |
+| 40 | **Formatting slop** | emoji headings, decorative bold, bullets for two sentences | Format follows the content |
+| 41 | **Faux-insight setups** | "Here's what nobody tells you: ..." | Cut the setup, keep the claim |
 
 Every pattern has a full example, its caveats, and an explanation in [`SKILL.md`](SKILL.md). The self-check list the skill runs on its own work is in [`eval.md`](eval.md).
 
@@ -198,7 +223,7 @@ Every pattern has a full example, its caveats, and an explanation in [`SKILL.md`
 >
 > I hope you enjoy this release! Let me know if you'd like a deeper dive into any feature. ✨
 
-**Patterns found:** 33 (fake-candid opener: "Let's be honest:"), 39 (faux-insight setup: "here's what nobody tells you"), 14 (em dash), 9 (binary contrast: "isn't just a tool, it's"; "This isn't just an update. It's a paradigm shift."; negative listing: "Not a patch. Not a refresh. A reinvention."), 1 (inflated importance: "marks a pivotal moment", "stands as a testament"), 7 (overused words: "groundbreaking", "journey", "vibrant", "robust", "leverages", "empowers"), 4 (sales language: "nestled at the intersection", "unwavering commitment"), 18 (emojis 🚀 ⚡ 🎨 🔌 ✨), 15 and 16 (bold and bold mini-heading list), 28 (announcing: "Here's what's new:"), 13 (passive voice: "Startup time has been dramatically improved"), 5 (weasel attribution: "Industry experts agree"), 36 (colon reveal: "The detail that makes it all work:"), 3 (shallow -ing: "ensuring buttery-smooth scrolling"), 31 (dramatic fragments), 6 (formulaic challenges: "Despite the challenges... continues to thrive"), 32 (fake-profound kicker: "The future of the terminal isn't coming. It's already here."), 20 (chatbot leftover: "I hope you enjoy this release! Let me know..."), plus the banned words "cutting-edge" and "paradigm shift".
+**Patterns found:** 35 (fake-candid opener: "Let's be honest:"), 41 (faux-insight setup: "here's what nobody tells you"), 15 (em dash), 10 (binary contrast: "isn't just a tool, it's"; "This isn't just an update. It's a paradigm shift."; negative listing: "Not a patch. Not a refresh. A reinvention."), 1 (inflated importance: "marks a pivotal moment", "stands as a testament"), 8 (overused words: "groundbreaking", "journey", "vibrant", "robust", "leverages", "empowers"), 4 (sales language: "nestled at the intersection", "unwavering commitment"), 19 (emojis 🚀 ⚡ 🎨 🔌 ✨), 16 and 17 (bold and bold mini-heading list), 30 (announcing: "Here's what's new:"), 14 (passive voice: "Startup time has been dramatically improved"), 5 (weasel attribution: "Industry experts agree"), 38 (colon reveal: "The detail that makes it all work:"), 3 (shallow -ing: "ensuring buttery-smooth scrolling"), 33 (dramatic fragments), 7 (formulaic challenges: "Despite the challenges... continues to thrive"), 34 (fake-profound kicker: "The future of the terminal isn't coming. It's already here."), 21 (chatbot leftover: "I hope you enjoy this release! Let me know..."), plus the banned words "cutting-edge" and "paradigm shift".
 
 **After:**
 > Shellmate 2.0 is out. It starts faster, ships a new theme engine, and adds a plugin API.
@@ -218,7 +243,7 @@ Humanize AI Slop does not start from scratch. It is the merge of two MIT skills 
 | | Humanizer | No AI Slop | Humanize BR | Humanize AI Slop |
 |---|---|---|---|---|
 | Language | English | English | Brazilian Portuguese | English |
-| Patterns | 35 | 20+ | 38 | 39 |
+| Patterns | 35 | 20+ | 41 | 41 |
 | Detect mode (no rewrite) | No | Yes | Yes | Yes |
 | Explicit editing principles | Partial | Yes | Yes | Yes |
 | Voice matching from a sample | Yes | No | Yes | Yes |
@@ -229,7 +254,7 @@ Humanize AI Slop does not start from scratch. It is the merge of two MIT skills 
 
 Three repositories inspired this one:
 
-- [Humanizer](https://github.com/blader/humanizer), by Siqi Chen, for the 35 Wikipedia-based patterns, the voice matching, and the no-invented-facts rule.
+- [Humanizer](https://github.com/blader/humanizer), by Siqi Chen, for the 35 Wikipedia-based patterns, the voice matching, and the no-invented-facts rule. Its later v3 revisions contributed the vague-association and wrong-reader patterns.
 - [No AI Slop](https://github.com/petergyang/no-ai-slop), by Peter Yang, for the editing principles, the detect mode, the word lists, the self-check, and the rhetorical patterns.
 - [Humanize BR](https://github.com/Esl1h/humanize-br), for the idea of merging the two into one numbered list and for the repository layout this one copies.
 
@@ -250,6 +275,7 @@ If this skill saved you some work, leave a star. It helps other people find the 
 <details>
 <summary>Show release notes</summary>
 
+- **1.1.0** - Adds two patterns from later Humanizer revisions, vague association and re-explaining what the reader knows, widens writing about the document and formatting slop, and renumbers the catalog to 41 patterns. Adds a defined detect report format, a pattern index in SKILL.md, a mechanical scanner (`scripts/slop_scan.py`), and an eval suite (`evals/`).
 - **1.0.0** - First release. Merges Humanizer (35 patterns) and No AI Slop (20+ patterns) into one English skill of 39 patterns, with a detect mode that does not rewrite, voice matching from a writing sample, a self-check list, and plugins for Claude Code and ChatGPT/Codex. Layout follows Humanize BR.
 
 </details>

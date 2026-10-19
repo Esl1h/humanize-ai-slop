@@ -1,0 +1,53 @@
+{
+  "skill_name": "humanize-ai-slop",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Humanize this launch post: [paste evals/fixtures/shellmate.md]",
+      "expected_output": "The rewritten post with no AI patterns and a What changed section",
+      "files": ["evals/fixtures/shellmate.md"],
+      "assertions": [
+        "No word from the banned list in SKILL.md appears in the rewrite",
+        "The rewrite contains no em dash or en dash",
+        "Every product fact from the draft appears in the rewrite or is flagged as unsupported",
+        "The response includes a short What changed section",
+        "No fact, name, number, or quote was invented"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Does this museum blurb sound AI-written? Flag the patterns without rewriting: [paste evals/fixtures/museum.md]",
+      "expected_output": "A detect report naming each pattern with a quoted line and a short fix",
+      "files": ["evals/fixtures/museum.md"],
+      "assertions": [
+        "Every finding names the pattern number and name",
+        "Every finding quotes the exact line from the draft",
+        "Every finding gives a short fix",
+        "The report does not rewrite the draft and does not claim AI authorship"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Clean up this code review reply so it leads with the decision: [paste evals/fixtures/reply.md]",
+      "expected_output": "A short reply that leads with the decision and keeps the fix",
+      "files": ["evals/fixtures/reply.md"],
+      "assertions": [
+        "The first sentence states the decision",
+        "The rewrite does not restate the diagnosis the reader already wrote",
+        "Chatbot residue (Great question!, Want me to..., Let me know!) is removed",
+        "No technical fact from the draft is lost"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Here is a sample of my writing: [paste 2 or 3 paragraphs of the writer's own prose]. Now humanize this text: [paste evals/fixtures/museum.md]",
+      "expected_output": "A rewrite that follows the sample's voice",
+      "files": ["evals/fixtures/museum.md"],
+      "assertions": [
+        "The rewrite matches the sample's sentence length and vocabulary habits",
+        "The rewrite keeps the sample's punctuation habits, including dash rate",
+        "No AI pattern from the skill's catalog remains"
+      ]
+    }
+  ]
+}

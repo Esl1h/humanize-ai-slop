@@ -5,25 +5,29 @@ description: |
   what it says, or flag every sign of AI writing without rewriting anything.
   Use when editing or reviewing prose for inflated claims, sales language,
   vague sources, repetitive structure, stock AI words, passive voice, filler,
-  fake depth, or chatbot artifacts. Merges the 35 patterns of Wikipedia's
-  "Signs of AI writing" with the editing principles and rhetorical patterns of
-  the No AI Slop project.
+  fake depth, or chatbot artifacts. Merges the patterns of Wikipedia's
+  "Signs of AI writing" with the editing principles and rhetorical patterns
+  of the No AI Slop project.
 license: MIT
 metadata:
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Humanize AI Slop: remove AI writing patterns
 
 Rewrite AI-sounding text so it reads like the writer, not a chatbot. Do not change what it says or make up details.
 
-The patterns below merge two sources. The first is Wikipedia's ["Signs of AI writing"](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing), maintained by WikiProject AI Cleanup, as organized into numbered patterns by the [Humanizer](https://github.com/blader/humanizer) skill. The second is [No AI Slop](https://github.com/petergyang/no-ai-slop), by Peter Yang, which contributes the editing principles, the detect mode, the word lists, and the rhetorical patterns that Wikipedia's list does not cover.
+The patterns below merge two sources. The first is Wikipedia's ["Signs of AI writing"](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing), maintained by WikiProject AI Cleanup, as organized into numbered patterns by the [Humanizer](https://github.com/blader/humanizer) skill. The second is [No AI Slop](https://github.com/petergyang/no-ai-slop), by Peter Yang, which contributes the editing principles, the detect mode, the word lists, and the rhetorical patterns that Wikipedia's list does not cover. Later Humanizer revisions contributed patterns 6 and 24 and the widened forms of 32 and 40; this skill keeps its own thematic numbering.
 
 ## Two modes
 
 **Edit (default).** The user shares a draft to fix. Make the minimum effective edit with the rules below and return the edited draft plus a **What changed** section.
 
-**Detect.** The user asks whether a piece sounds like AI, or asks to audit, scan, or flag a draft without rewriting. Name each pattern from this skill that appears, quote the exact line, and give the fix in a few words. Do not rewrite, score the draft, or guess whether AI wrote it. AI detectors guess. Named patterns are evidence the user can check with their own eyes. Offer to edit the draft after.
+**Detect.** The user asks whether a piece sounds like AI, or asks to audit, scan, or flag a draft without rewriting. Name each pattern from this skill that appears, quote the exact line, and give the fix in a few words, one finding per line in document order:
+
+- **Pattern N (name):** "quoted line" → the fix in a few words
+
+Do not rewrite, score the draft, or guess whether AI wrote it. AI detectors guess. Named patterns are evidence the user can check with their own eyes. When the draft is in a file and the bundled scanner is available, run `python3 scripts/slop_scan.py <path>` first: it lists the mechanical findings (banned words, dashes, decorated headings, mixed quotes, bold-label lists, stacked hyphen pairs) with pattern numbers, so you add only the rhetorical patterns. If the scanner is not installed, apply those checks by hand. Offer to edit the draft after.
 
 ## What to do
 
@@ -52,7 +56,7 @@ If the user provides a writing sample (their own previous writing), analyze it b
 2. Match those habits. Do not replace casual words with formal ones or remove deliberate quirks.
 3. If there is no sample, use the guidance below.
 
-A writing sample takes priority over these style rules. If the sample uses em dashes, keep them at about the same rate. Do not apply pattern 14 as a ban.
+A writing sample takes priority over these style rules. If the sample uses em dashes, keep them at about the same rate. Do not apply pattern 15 as a ban.
 
 ## Add personality only when it fits
 
@@ -89,6 +93,18 @@ Banned outright: delve, foster, leverage, utilize, facilitate, empower, streamli
 Often-empty adverbs: just, literally, honestly, simply, actually, truly, fundamentally, importantly, crucially, inherently, inevitably. Cut them when they add nothing. Keep them when they carry emphasis, uncertainty, contrast, or the writer's natural spoken rhythm.
 
 Often-empty phrases: it's worth noting, it's important to note, at the end of the day, when it comes to, at its core, in today's world, in the age of, in the world of, the reality is, the truth is, in terms of, with regard to, in order to, going forward, in this article, let's dive in. Cut them when they delay the point. Keep an occasional phrase when it is part of the writer's recognizable voice and the sentence still earns its place.
+
+## Pattern index
+
+The catalog in one glance, grouped by category. Use it to find a pattern by number when checking a draft instead of rereading the whole catalog.
+
+**Content:** 1 inflated importance, 2 name-dropping, 3 shallow -ing analysis, 4 sales language, 5 vague sources, 6 vague association, 7 formulaic challenges
+**Language and grammar:** 8 overused AI words, 9 avoiding is/are/has, 10 binary contrasts, 11 forced triads, 12 synonym cycling, 13 false ranges, 14 passive voice
+**Style and formatting:** 15 dashes, 16 bold overload, 17 bold-label lists, 18 title case headings, 19 emoji decoration, 20 quote consistency
+**Chatbot:** 21 chatbot leftovers, 22 knowledge-limit guesses, 23 agreeable tone, 24 re-explaining shared context
+**Filler and endings:** 25 filler phrases, 26 qualifier stacks, 27 generic endings and recaps
+**Hyphenation:** 28 hyphenated pairs
+**Fake depth and rhetoric:** 29 fake deeper truth, 30 announcing the point, 31 heading restated, 32 writing about the document, 33 forced punchlines, 34 formulaic sayings, 35 fake-candid openers, 36 unanswered objections, 37 fake alternatives, 38 colon reveals, 39 interpretive metadiscourse, 40 formatting slop, 41 faux-insight setups
 
 ## AI writing patterns
 
@@ -172,7 +188,19 @@ Replace the -ing phrase with a real consequence only when the source supports it
 
 Name a real source when the source text provides one. Otherwise, remove the unsupported claim. If the user has no source, ask instead of inventing one.
 
-#### 6. Formulaic challenges and outlook sections
+#### 6. Vague connection or association
+
+**Words to watch:** associated with, in association with, connected to, in connection with, linked to, tied to
+
+**Problem:** AI writing often says two things are connected without saying how. "He was associated with the orchestra" hides whether he founded it, conducted it, or only reviewed it. Name the relationship the source gives. If the source does not say how, keep the vague wording rather than inventing a role.
+
+**Before:**
+> He is associated with the Rajhans Orchestra, which he founded and conducts. The concerts were organised in connection with the celebrations of Pakistan's 50th anniversary.
+
+**After:**
+> He founded and conducts the Rajhans Orchestra. The concerts were part of the celebrations of Pakistan's 50th anniversary.
+
+#### 7. Formulaic challenges and outlook sections
 
 **Words to watch:** Despite its... faces several challenges..., Despite these challenges, Challenges and Legacy, Future Outlook, continues to thrive
 
@@ -188,9 +216,9 @@ Add details such as dates or public actions only when they come from the source 
 
 ### Language and grammar patterns
 
-#### 7. Overused AI words
+#### 8. Overused AI words
 
-**High-frequency AI words:** actually, additionally, align with, crucial, delve, emphasizing, enduring, enhance, fostering, garner, gate/gated/gating (figurative; keep established technical usage), highlight (verb), interplay, intricate/intricacies, journey (figurative), key (adjective), landscape (abstract noun), leverage, pivotal, quietly, robust, seamless, showcase, tapestry (abstract noun), testament, underscore (verb), valuable, vibrant
+**High-frequency AI words:** actually, additionally, align with, bolstered, crucial, deep dive, delve, emphasizing, enduring, enhance, fostering, garner, gate/gated/gating (figurative; keep established technical usage), highlight (verb), interplay, intricate/intricacies, journey (figurative), key (adjective), landscape (abstract noun), leverage, pivotal, quietly, robust, seamless, showcase, tapestry (abstract noun), testament, underscore (verb), valuable, vibrant
 
 **Problem:** AI writing uses these words much more often than most people do, especially in groups.
 
@@ -200,7 +228,7 @@ Add details such as dates or public actions only when they come from the source 
 **After:**
 > Somali cuisine also includes camel meat, which is considered a delicacy. Pasta dishes, introduced during Italian colonization, remain common, especially in the south.
 
-#### 8. Avoiding is, are, and has
+#### 9. Avoiding is, are, and has
 
 **Words to watch:** serves as/stands as/marks/represents [a], boasts/features/offers [a], acts as, functions as
 
@@ -218,7 +246,7 @@ Add details such as dates or public actions only when they come from the source 
 **After:**
 > The app tracks sponsors, drafts, due dates, and approvals in one place.
 
-#### 9. Not X but Y, binary contrasts, and negative listing
+#### 10. Not X but Y, binary contrasts, and negative listing
 
 **Problem:** AI writing overuses forms such as "not only... but...", "it's not just X, it's Y", "the question isn't X, it's Y", inside one sentence or split across two. It also stacks negations before the point ("Not a X. Not a Y. A Z.") and adds clipped endings such as "no guessing" instead of writing a clear clause. State Y directly.
 
@@ -246,7 +274,7 @@ Add details such as dates or public actions only when they come from the source 
 **After:**
 > The options come from the selected item without forcing the user to guess.
 
-#### 10. Forced groups of three
+#### 11. Forced groups of three
 
 **Problem:** AI writing often forces ideas into groups of three to sound complete.
 
@@ -256,7 +284,7 @@ Add details such as dates or public actions only when they come from the source 
 **After:**
 > The event includes talks and panels. There's also time for informal networking between sessions.
 
-#### 11. Synonym cycling and repeated sentence openings
+#### 12. Synonym cycling and repeated sentence openings
 
 **Problem:** AI writing handles repetition by rule instead of by ear. It may keep renaming the same person or thing. It may also start several sentences with the same subject, often *she* or *he*.
 
@@ -276,7 +304,7 @@ Use one clear name for the same subject. If the clear word is right, repeat it. 
 
 Do not ban the repeated word. Fix the repeated sentence pattern. The remaining sentence may still start with "She."
 
-#### 12. False from X to Y ranges
+#### 13. False from X to Y ranges
 
 **Problem:** AI writing often uses "from X to Y" when X and Y do not form a real range.
 
@@ -286,7 +314,7 @@ Do not ban the repeated word. Fix the repeated sentence pattern. The remaining s
 **After:**
 > The book covers the Big Bang, star formation, and current theories about dark matter.
 
-#### 13. Passive voice and missing subjects
+#### 14. Passive voice and missing subjects
 
 **Problem:** AI writing often hides who acts or drops the subject. Use active voice when it makes the actor and action clearer. Never let inanimate things do human verbs ("the decision emerged").
 
@@ -298,7 +326,7 @@ Do not ban the repeated word. Fix the repeated sentence pattern. The remaining s
 
 ### Style and formatting patterns
 
-#### 14. Em and en dashes
+#### 15. Em and en dashes
 
 **Rule:** The final rewrite must not use em dashes (—) or en dashes (–) as a rhythm crutch, unless the writer's sample uses them. Replace a dash with a period, comma, colon, or parentheses, or rewrite the sentence. Also check for spaced dashes ( — ) and double hyphens (--) used as dashes. In short copy, use none. In longer drafts, one or two are fine if they clearly beat commas, periods, or parentheses. Remove clusters and decorative dashes.
 
@@ -316,7 +344,7 @@ Do not ban the repeated word. Fix the repeated sentence pattern. The remaining s
 
 Before returning the rewrite, search for `—` and `–`. Remove each one unless the writer's sample uses that mark. In that case, match the sample's rate.
 
-#### 15. Too much bold text
+#### 16. Too much bold text
 
 **Problem:** AI chatbots often bold words and phrases without a clear reason.
 
@@ -326,7 +354,7 @@ Before returning the rewrite, search for `—` and `–`. Remove each one unless
 **After:**
 > It blends OKRs, KPIs, and visual strategy tools like the Business Model Canvas and Balanced Scorecard.
 
-#### 16. Lists with bold mini-headings
+#### 17. Lists with bold mini-headings
 
 **Problem:** AI writing often uses vertical lists in which every item starts with a bold label and a colon.
 
@@ -338,7 +366,7 @@ Before returning the rewrite, search for `—` and `–`. Remove each one unless
 **After:**
 > The update improves the interface, speeds up load times through optimized algorithms, and adds end-to-end encryption.
 
-#### 17. Title case in headings
+#### 18. Title case in headings
 
 **Problem:** AI chatbots often capitalize every main word in a heading.
 
@@ -348,7 +376,7 @@ Before returning the rewrite, search for `—` and `–`. Remove each one unless
 **After:**
 > ## Strategic negotiations and global partnerships
 
-#### 18. Emojis
+#### 19. Emojis
 
 **Problem:** AI chatbots often add emojis to headings and list items as decoration.
 
@@ -360,7 +388,7 @@ Before returning the rewrite, search for `—` and `–`. Remove each one unless
 **After:**
 > The product launches in Q3. User research showed a preference for simplicity. Next step: schedule a follow-up meeting.
 
-#### 19. Curly quotation marks and mixed quote styles
+#### 20. Curly quotation marks and mixed quote styles
 
 **Problem:** ChatGPT often uses curly quotes (“...”) where the writer or the target format uses straight quotes ("..."). Mixing both styles in one document is a stronger sign than either style alone. Match the quote style of the writer's sample or the target format, and keep it consistent throughout.
 
@@ -374,7 +402,7 @@ Curly quotes by themselves are not evidence of AI. See [What not to flag](#what-
 
 ### Chatbot patterns
 
-#### 20. Chatbot text left in the answer
+#### 21. Chatbot text left in the answer
 
 **Words to watch:** I hope this helps, Of course!, Certainly!, You're absolutely right!, Would you like..., Want me to...?, Want me to give examples?, Should I continue?, let me know, here is a...
 
@@ -386,7 +414,7 @@ Curly quotes by themselves are not evidence of AI. See [What not to flag](#what-
 **After:**
 > The French Revolution began in 1789 when financial crisis and food shortages led to widespread unrest.
 
-#### 21. Knowledge-limit disclaimers and guesses
+#### 22. Knowledge-limit disclaimers and guesses
 
 **Words to watch:** as of [date], up to my last training update, while specific details are limited/scarce..., based on available information, not publicly available, maintains a low profile, keeps personal details private, prefers to stay out of the spotlight, likely [grew up/studied/began], it is believed that
 
@@ -404,7 +432,7 @@ Curly quotes by themselves are not evidence of AI. See [What not to flag](#what-
 **After:**
 > Her early life is not documented in the available sources. (Or omit the section.)
 
-#### 22. Overly agreeable tone
+#### 23. Overly agreeable tone
 
 **Problem:** AI assistants often praise the user or agree before giving the answer.
 
@@ -414,9 +442,25 @@ Curly quotes by themselves are not evidence of AI. See [What not to flag](#what-
 **After:**
 > The economic factors you mentioned are relevant here.
 
+#### 24. Re-explaining what the reader already knows
+
+**Signs to watch:** a short reply that restates the problem, walks through the diagnosis, and lays out the evidence before it reaches the decision; a query, command, or set of numbers included to prove a plan will work; background the other person wrote or already agreed to; the answer itself sitting in the last line.
+
+**Problem:** In a reply, the reader already has the context, so rebuilding it adds nothing and buries the point. Each sentence can read fine on its own, so this tell survives sentence-level cleanup. Lead with the decision and keep only the reasoning that would change whether the reader agrees: usually one fact they lack and any link they need to act. The diagnosis and the proof belong in the ticket or document that follows. Act on this pattern when you can see the surrounding conversation or the text plainly is a reply. If you cannot tell, ask or leave the text alone.
+
+**Before:**
+> Yeah, you're right, this works around the issue rather than fixing it. The real fix is in `MergeService`: when we move a child under a new parent, it should update `pipeline_id` along with `parent_id`. We can backfill the bad rows from the audit log. I checked QA: 123 past merges, only 6 rows wrong now, so the cleanup is small.
+>
+> Since `MergeService` is shared code, I'd rather open a separate ticket than widen this PR. The fallback here is fine to keep until then.
+
+**After:**
+> Agreed, this is a workaround. Fixing `MergeService` means touching shared code plus a small backfill, which would widen this PR past its scope.
+>
+> I'd rather open a separate ticket for the fix and keep the fallback here until then.
+
 ### Filler, hedging, and endings
 
-#### 23. Filler phrases
+#### 25. Filler phrases
 
 **Before → After:**
 - "In order to achieve this goal" → "To achieve this"
@@ -427,7 +471,7 @@ Curly quotes by themselves are not evidence of AI. See [What not to flag](#what-
 - "It is important to note that the data shows" → "The data shows"
 - "Made a decision to" → "Decided to"
 
-#### 24. Too many qualifiers
+#### 26. Too many qualifiers
 
 **Phrases to watch:** to be fair, it's also possible, could potentially, might arguably, in some cases it may, this is an inference
 
@@ -439,11 +483,11 @@ Curly quotes by themselves are not evidence of AI. See [What not to flag](#what-
 **After:**
 > The policy may affect outcomes.
 
-#### 25. Generic positive endings and summary recaps
+#### 27. Generic positive endings and summary recaps
 
 **Words to watch:** the future looks bright, exciting times lie ahead, in conclusion, ultimately, overall, as we have seen, to sum up
 
-**Problem:** AI writing often ends with vague optimism instead of the last useful fact, or with a final paragraph that restates the piece. The reader was just there. End on the last concrete point, takeaway, or next action instead. For endings that turn the point into a metaphor or mic-drop line, see pattern 32.
+**Problem:** AI writing often ends with vague optimism instead of the last useful fact, or with a final paragraph that restates the piece. The reader was just there. End on the last concrete point, takeaway, or next action instead. For endings that turn the point into a metaphor or mic-drop line, see pattern 34.
 
 **Before (generic ending):**
 > The future looks bright for the company. Exciting times lie ahead as they continue their journey toward excellence. This represents a major step in the right direction.
@@ -459,7 +503,7 @@ Curly quotes by themselves are not evidence of AI. See [What not to flag](#what-
 
 ### Hyphenation
 
-#### 26. Too many hyphenated word pairs
+#### 28. Too many hyphenated word pairs
 
 **Words to watch:** third-party, cross-functional, client-facing, data-driven, decision-making, well-known, high-quality, real-time, long-term, end-to-end, customer-centric, state-of-the-art
 
@@ -481,7 +525,7 @@ Keep the hyphenated term when it is the established name of a technology or conc
 
 ### Fake depth and rhetoric
 
-#### 27. Pretending to reveal a deeper truth
+#### 29. Pretending to reveal a deeper truth
 
 **Phrases to watch:** the real question is, at its core, in reality, what really matters, fundamentally, the deeper issue, the heart of the matter
 
@@ -493,7 +537,7 @@ Keep the hyphenated term when it is the established name of a technology or conc
 **After:**
 > The question is whether teams can adapt. That mostly depends on whether the organization is ready to change its habits.
 
-#### 28. Announcing the next point and rhetorical setups
+#### 30. Announcing the next point and rhetorical setups
 
 **Phrases to watch:** let's dive in, let's explore, let's break this down, here's what you need to know, now let's look at, without further ado, heads up, quick note, before I forget, what if I told you, think about it:, plot twist:, and self-answered "Question? Answer." pairs
 
@@ -517,7 +561,7 @@ Keep the hyphenated term when it is the established name of a technology or conc
 **After:**
 > Most of the test suite never catches a real bug, because coverage measures lines, not behavior.
 
-#### 29. A heading repeated in the first sentence
+#### 31. A heading repeated in the first sentence
 
 **Signs to watch:** A heading followed by a one-line paragraph that simply restates the heading before the real content begins.
 
@@ -535,9 +579,11 @@ Keep the hyphenated term when it is the established name of a technology or conc
 >
 > When users hit a slow page, they leave.
 
-#### 30. Writing about the previous version
+#### 32. Writing about the document instead of its subject
 
-**Problem:** Documentation and comments should describe the current behavior. Mention the previous version only in change logs, release notes, migration guides, and other documents about change.
+**Words to watch:** was added to replace, generated from, compiled from, drawn from, the table below compares, this section is organized by, the sections that follow
+
+**Problem:** The text describes itself instead of its subject. The move has three forms: what the text replaced, how it was assembled or sourced, and a legend, layout, or order the reader can already see. Mention a previous version only in change logs, release notes, migration guides, and other documents about change. Keep a source credit the reader can follow, and cut the account of how you worked. Keep a caveat that changes what the reader should do. State a convention only when the reader cannot infer it, and state it once.
 
 **Before:**
 > This function was added to replace the previous approach of iterating through all items, which caused O(n²) performance.
@@ -545,7 +591,13 @@ Keep the hyphenated term when it is the established name of a technology or conc
 **After:**
 > This function uses a hash map for O(1) lookups, avoiding the O(n²) cost of naive iteration.
 
-#### 31. Forced punchlines, dramatic fragments, and robotic rhythm
+**Before (method narration):**
+> The figures below are drawn from each vendor's published pricing; anything we could not confirm is flagged rather than guessed.
+
+**After:**
+> Prices are each vendor's published rate. Two vendors publish nothing; call them.
+
+#### 33. Forced punchlines, dramatic fragments, and robotic rhythm
 
 **Problem:** AI writing often turns each sentence into a dramatic closing line. One short sentence can add emphasis. A row of short fragments usually feels forced ("That's it. That's the whole thing."), and so do paragraphs that repeat the same sentence shape one after another. Use complete sentences and vary the shape only when it helps the point.
 
@@ -555,7 +607,7 @@ Keep the hyphenated term when it is the established name of a technology or conc
 **After:**
 > AlphaEvolve changed the search because it did not favor symmetry or human-looking designs. That made some of the older assumptions less useful.
 
-#### 32. Formulaic sayings and fake-profound kickers
+#### 34. Formulaic sayings and fake-profound kickers
 
 **Words to watch:** X is the Y of Z, X becomes a trap, X is not a tool but a mirror, the language of, the currency of, the architecture of, the future isn't coming, it's already here
 
@@ -573,7 +625,7 @@ Keep the hyphenated term when it is the established name of a technology or conc
 **After:**
 > We shipped the new billing flow to all customers on Monday.
 
-#### 33. Fake-candid and throat-clearing openers
+#### 35. Fake-candid and throat-clearing openers
 
 **Phrases to watch:** Honestly?, Look, Here's the thing, Here's what I mean, The thing is, Let me be clear, Let's be honest, I'll be honest, Real talk, The uncomfortable truth is, when used as standalone hooks or staged pauses before an ordinary point
 
@@ -591,7 +643,7 @@ Keep the hyphenated term when it is the established name of a technology or conc
 **After:**
 > Most onboarding flows ask for too much on the first screen.
 
-#### 34. Answering objections no one raised
+#### 36. Answering objections no one raised
 
 **Phrases to watch:** This isn't (mainly/really) about, I'm not saying/arguing/trying to, To be clear, Don't get me wrong, This is not to say, You could argue/frame this differently but, Some might say... but
 
@@ -605,7 +657,7 @@ Keep the hyphenated term when it is the established name of a technology or conc
 
 Remove only the unsupported defense. If it contains a real claim, state that claim directly. Keep an objection when the text names its source or answers it in full.
 
-#### 35. Rejecting fake alternatives
+#### 37. Rejecting fake alternatives
 
 **Phrases to watch:** A tempting option/approach would be, One might be tempted to, An obvious approach would be, You might think... but, It would be easy to just, Some would suggest
 
@@ -619,7 +671,7 @@ Remove only the unsupported defense. If it contains a real claim, state that cla
 
 One rejected option may be valid. Several short, unrelated rejections are a stronger sign. Ask what new information each sentence adds. If it only records an earlier edit, rewrite the paragraph around its main point.
 
-#### 36. Colon reveals
+#### 38. Colon reveals
 
 **Problem:** AI writing likes to set up a noun phrase, a colon, then a lowercase dramatic reveal: "The detail that makes it work: a separate agent grades it." "The best part: it learns." Rewrite as a plain sentence. Use colons for lists, labels, and quotes, not fake drama. Prefer sentence case after a colon unless grammar, a proper noun, a title, or code requires otherwise.
 
@@ -629,9 +681,9 @@ One rejected option may be valid. Several short, unrelated rejections are a stro
 **After:**
 > A separate agent grades the output, which is what makes the system work.
 
-#### 37. Interpretive metadiscourse
+#### 39. Interpretive metadiscourse
 
-**Problem:** AI writing sometimes steps outside the subject to tell the reader what to notice, how much weight to give it, or how to interpret the prose: "That last part matters more than it sounds," "The key point is," "As you can see," "This distinction matters," or a redundant "In other words." If the point is clear, delete the aside. Otherwise, replace it with support or facts already in the content.
+**Problem:** AI writing sometimes steps outside the subject to tell the reader what to notice, how much weight to give it, or how to interpret the prose: "That last part matters more than it sounds," "The key point is," "As you can see," "This distinction matters," a sentence after an example, scene, or number that names what it showed ("This shows the importance of..."), or a redundant "In other words." If the point is clear, delete the aside. Otherwise, replace it with support or facts already in the content.
 
 **Before:**
 > That last part matters more than it sounds. As you can see, this distinction is essential. In other words, the process got faster.
@@ -639,11 +691,11 @@ One rejected option may be valid. Several short, unrelated rejections are a stro
 **After:**
 > The process got faster.
 
-#### 38. Formatting slop
+#### 40. Formatting slop
 
-**Problem:** Several artificial formatting habits usually show up together: emoji in headings (pattern 18), bold sprinkled mid-sentence for emphasis (pattern 15), bullet lists where two sentences of prose would read better (pattern 16), and headers over two-sentence sections (pattern 29). Format should follow the content, not decorate it. When reviewing, ask whether each visual element carries information or only imitates the look of an organized document.
+**Problem:** Several artificial formatting habits usually show up together: emoji in headings (pattern 19), bold sprinkled mid-sentence for emphasis (pattern 16), bullet lists where two sentences of prose would read better (pattern 17), and headers over two-sentence sections (pattern 31). The same family covers arrows and other symbols used as decoration, a horizontal rule between every section, a document that opens by repeating its own title, and headings written for effect instead of naming what the section holds ("The decision, on one screen" becomes "How the six options compare"). Format should follow the content, not decorate it. When reviewing, ask whether each visual element carries information or only imitates the look of an organized document.
 
-#### 39. Faux-insight setups
+#### 41. Faux-insight setups
 
 **Phrases to watch:** this is the part most people skip, what most people get wrong, here's what nobody tells you, the part everyone misses, the secret is, most people don't realize
 
@@ -664,7 +716,7 @@ A person may use some of these patterns. Do not treat any item below as proof by
 - **Perfect grammar and consistent style.** Many writers are professionals or have been edited. Polish does not equal AI.
 - **Mixed casual and formal styles.** This can reflect the writer's field, age, or personal habits.
 - **"Bland" or "robotic" prose.** AI prose has *specific* tells. Generic dryness without those tells is just dry writing.
-- **Formal or academic words.** Pattern 7 lists specific words that AI writing overuses. Do not simplify every formal word.
+- **Formal or academic words.** Pattern 8 lists specific words that AI writing overuses. Do not simplify every formal word.
 - **Letter-style opening or closing on a comment.** Salutations and sign-offs predate ChatGPT by centuries.
 - **Common transition words in isolation.** *Additionally*, *moreover*, *consequently* are AI-coded only when piled up. One *however* is not a tell.
 - **Curly quotes alone.** macOS, Word, Google Docs, and most CMSes auto-curl by default. Curly quotes only count when stacked with other tells.
@@ -674,7 +726,7 @@ A person may use some of these patterns. Do not treat any item below as proof by
 - **"Honestly" or "look" mid-sentence.** These are ordinary in casual writing. The tell is the standalone theatrical opener, not the word itself.
 - **Useful limits and disclaimers.** Keep scope statements, legal and safety notices, real corrections, named objections, replies, and FAQ answers.
 - **Real alternatives.** Keep options that a reader may consider in a design document, tutorial, or argument. Remove only an unlikely option that the text dismisses and never uses again.
-- **A colon before a real list, label, or quote.** Pattern 36 targets staged reveals, not ordinary punctuation.
+- **A colon before a real list, label, or quote.** Pattern 38 targets staged reveals, not ordinary punctuation.
 - **Unsourced claims.** Most of the web is unsourced. Lack of citations does not prove anything.
 - **Correct, complex formatting.** Visual editors and templates produce clean output without any AI.
 - **Secondhand text.** Do not rewrite watched phrases inside quotations, titles, proper names, or examples where the phrase is being discussed rather than used.
@@ -701,7 +753,7 @@ These details often carry the writer's voice. Keep them unless they hurt the mea
 
 **Embedded mode.** When another task uses this skill for a pull request, commit message, or document, return only the final text.
 
-**Detect mode.** Name each pattern found, quote the exact line, and give the fix in a few words. Do not rewrite the draft, score it, or claim whether AI wrote it.
+**Detect mode.** One line per finding, in document order: **Pattern N (name):** "quoted line" → the fix in a few words. Do not rewrite the draft, score it, or claim whether AI wrote it.
 
 ## Rewrite process and self-check
 
@@ -712,8 +764,8 @@ These details often carry the writer's voice. Keep them unless they hurt the mea
    - **"What still sounds AI-generated?"**
    - **"Did the rewrite add or remove any fact, name, number, date, quote, citation, ranking, or other claim?"**
    Treat any unsupported addition or lost claim as an error.
-5. Write the final version. State each point naturally instead of patching one flagged phrase at a time. If a sentence stays awkward, rewrite the paragraph around its main point. Apply the dash rule in pattern 14.
-6. Check the rewrite against the list in [`eval.md`](eval.md). If any check fails, fix the draft and run the checks again.
+5. Write the final version. State each point naturally instead of patching one flagged phrase at a time. If a sentence stays awkward, rewrite the paragraph around its main point. Apply the dash rule in pattern 15.
+6. Check the rewrite against the list in [`eval.md`](eval.md). If any check fails, fix the draft and run the checks again. In file mode, when the bundled scanner is available, run `python3 scripts/slop_scan.py <path>` on the rewritten file as the last check; a clean rewrite reports nothing.
 
 Return the result required by [How to return the result](#how-to-return-the-result).
 
@@ -721,8 +773,8 @@ Return the result required by [How to return the result](#how-to-return-the-resu
 
 This skill merges two English sources:
 
-- [Wikipedia: Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing), maintained by WikiProject AI Cleanup, as organized into 35 numbered patterns by [Humanizer](https://github.com/blader/humanizer). Its patterns come from reviews of AI-generated text on Wikipedia.
-- [No AI Slop](https://github.com/petergyang/no-ai-slop), by Peter Yang, which contributed the editing principles, the detect mode, the word lists, the self-check list, and the rhetorical patterns in sections 32, 33, 36, 37, 38, and 39.
+- [Wikipedia: Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing), maintained by WikiProject AI Cleanup, as organized into numbered patterns by earlier versions of [Humanizer](https://github.com/blader/humanizer). Its later v3 revision, reordered by strength, contributed patterns 6 and 24 and the widened forms of 32 and 40. Its patterns come from reviews of AI-generated text on Wikipedia.
+- [No AI Slop](https://github.com/petergyang/no-ai-slop), by Peter Yang, which contributed the editing principles, the detect mode, the word lists, the self-check list, and the rhetorical patterns in sections 34, 35, 38, 39, 40, and 41.
 
 The merge and the numbering follow [Humanize BR](https://github.com/Esl1h/humanize-br), which combined the same two sources for Brazilian Portuguese.
 

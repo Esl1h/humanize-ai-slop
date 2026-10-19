@@ -1,7 +1,7 @@
 {
   "name": "humanize-ai-slop",
-  "version": "1.0.0",
-  "description": "Removes 39 patterns of AI writing from any draft without flattening the writer's voice.",
+  "version": "1.1.0",
+  "description": "Removes 41 patterns of AI writing from any draft without flattening the writer's voice.",
   "author": {
     "name": "Esl1h",
     "url": "https://github.com/Esl1h"
@@ -19,8 +19,8 @@
   "skills": "./",
   "interface": {
     "displayName": "Humanize AI Slop",
-    "shortDescription": "Remove 39 AI writing patterns without losing your voice",
-    "longDescription": "Humanize AI Slop rewrites AI-sounding text so it reads like a person wrote it, without flattening the writer's voice and without changing what the text says. It merges two of the most used English writing skills for this job, Humanizer and No AI Slop, into one list of 39 patterns. Some of the patterns it removes:\n\nBinary contrasts: “It’s not X. It’s Y.”\n\nThroat-clearing and fake-candid openers: “Here’s the thing,” “Let’s be honest”\n\nFaux-insight setups: “What nobody tells you,” “The part everyone misses”\n\nColon reveals: “The best part: it learns.”\n\nImportance puffery: “marks a pivotal moment,” “a testament to”\n\nFake-profound endings: “The future isn’t coming. It’s already here.”\n\n...and more, plus chatbot leftovers, vague sources, emoji headings, and em dash clusters.\n\nUse it to edit a draft and remove the AI accent, or to detect named AI patterns in a piece of writing without rewriting it. If you like the skill, star it on GitHub: https://github.com/Esl1h/humanize-ai-slop",
+    "shortDescription": "Remove 41 AI writing patterns without losing your voice",
+    "longDescription": "Humanize AI Slop rewrites AI-sounding text so it reads like a person wrote it, without flattening the writer's voice and without changing what the text says. It merges two of the most used English writing skills for this job, Humanizer and No AI Slop, into one list of 41 patterns. Some of the patterns it removes:\n\nBinary contrasts: “It’s not X. It’s Y.”\n\nThroat-clearing and fake-candid openers: “Here’s the thing,” “Let’s be honest”\n\nFaux-insight setups: “What nobody tells you,” “The part everyone misses”\n\nColon reveals: “The best part: it learns.”\n\nImportance puffery: “marks a pivotal moment,” “a testament to”\n\nFake-profound endings: “The future isn’t coming. It’s already here.”\n\n...and more, plus chatbot leftovers, vague sources, emoji headings, and em dash clusters.\n\nUse it to edit a draft and remove the AI accent, or to detect named AI patterns in a piece of writing without rewriting it. If you like the skill, star it on GitHub: https://github.com/Esl1h/humanize-ai-slop",
     "developerName": "Esl1h",
     "category": "Productivity",
     "capabilities": [

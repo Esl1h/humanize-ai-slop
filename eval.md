@@ -22,16 +22,16 @@ For detect requests, make sure the response names each pattern found with a quot
 
 1. Are banned words, filler phrases, often-empty adverbs, and inflated claims removed unless quoted as examples?
 
-## The 39 patterns
+## The 41 patterns
 
 1. Are binary contrasts, negative listings, rhetorical setups, announcements, and fake-candid or throat-clearing openers removed?
 2. Are faux-insight setups, colon reveals, shallow -ing analysis, fake-strong verbs, synonym cycling, dramatic fragments, and robotic rhythm fixed?
-3. Are inflated importance, sales language, and vague sources replaced with plain facts and named sources, or flagged for the writer when no source exists?
-4. Is interpretive metadiscourse removed, including authorial metacommentary, reader guidance, emphasis markers, and redundant glossing?
+3. Are inflated importance, sales language, vague sources, and vague association replaced with plain facts, named sources, and named relationships, or flagged for the writer when no source exists?
+4. Is interpretive metadiscourse and writing about the document instead of its subject removed, including method narration, authorial metacommentary, reader guidance, emphasis markers, and redundant glossing?
 5. Are fake-profound kicker lines deleted instead of rewritten into better metaphors?
 6. Are generic positive endings and summary recaps cut so the piece ends on a concrete point, takeaway, or next action?
-7. Are chatbot leftovers, knowledge-limit disclaimers, disguised guesses, and overly agreeable openers gone?
-8. Is formatting slop removed: emoji headings, decorative bold, bold mini-heading lists, title case in headings, bullets that should be prose, headers over tiny sections?
+7. Are chatbot leftovers, knowledge-limit disclaimers, disguised guesses, and overly agreeable openers gone, and are replies that re-explain shared context trimmed to the decision?
+8. Is formatting slop removed: emoji and decorative symbols in headings, decorative bold, bold mini-heading lists, title case in headings, bullets that should be prose, headers over tiny sections?
 9. Are colons sentence case unless grammar, a proper noun, a title, or code requires otherwise?
 10. Are em dashes used sparingly: usually none in short copy, and only one or two in longer drafts when they clearly help, unless the writer's sample uses them?
 11. Are quotation marks consistent throughout the document and matched to the writer or the target format?
@@ -44,3 +44,4 @@ For detect requests, make sure the response names each pattern found with a quot
 3. Would the edited draft sound natural if read aloud to a sharp colleague?
 4. Does the final output include the full edited draft and a short **What changed** section?
 5. For detect requests, does the response name each pattern with a quoted line and a short fix, without rewriting, scoring, or claiming AI authorship?
+6. In file mode, when the bundled scanner is available, does `scripts/slop_scan.py` report nothing on the rewritten file?

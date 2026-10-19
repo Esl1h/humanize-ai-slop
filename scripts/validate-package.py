@@ -17,7 +17,16 @@ EVAL = (ROOT / "eval.md").read_text(encoding="utf-8")
 CLAUDE_PLUGIN = json.loads((ROOT / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8"))
 CODEX_PLUGIN = json.loads((ROOT / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
 
-PATTERN_COUNT = 39
+PATTERN_COUNT = 41
+CATEGORY_HEADINGS = (
+    "### Content patterns",
+    "### Language and grammar patterns",
+    "### Style and formatting patterns",
+    "### Chatbot patterns",
+    "### Filler, hedging, and endings",
+    "### Hyphenation",
+    "### Fake depth and rhetoric",
+)
 
 
 def require_match(match: re.Match[str] | None, message: str) -> re.Match[str]:
@@ -88,6 +97,35 @@ if pattern_numbers != list(range(1, PATTERN_COUNT + 1)):
         f"Number SKILL.md patterns from 1 through {PATTERN_COUNT}: {pattern_numbers}"
     )
 
+for category in CATEGORY_HEADINGS:
+    if SKILL.count(category) != 1:
+        raise SystemExit(f"Keep the category heading exactly once: {category}")
+
+index_section = require_match(
+    re.search(r"(?s)## Pattern index\n(.*?)\n## ", SKILL),
+    "Keep a Pattern index section in SKILL.md",
+).group(1)
+index_numbers = {
+    int(number)
+    for number in re.findall(r"(?<![\w.-])(\d+)(?![\w.])", index_section)
+}
+if index_numbers != set(range(1, PATTERN_COUNT + 1)):
+    raise SystemExit(
+        f"List patterns 1 through {PATTERN_COUNT} in the SKILL.md pattern index"
+    )
+
+agents_counts = require_match(
+    re.search(
+        r"(?m)the skill has ([0-9]+) numbered patterns in ([a-z]+) categories",
+        AGENTS,
+    ),
+    "State the pattern and category counts in AGENTS.md",
+)
+if int(agents_counts.group(1)) != PATTERN_COUNT:
+    raise SystemExit("AGENTS.md pattern count does not match the validator")
+if agents_counts.group(2) != "seven":
+    raise SystemExit("AGENTS.md category count does not match the category list")
+
 readme_numbers = {
     int(number) for number in re.findall(r"(?m)^\| ([0-9]+) \|", README)
 }
@@ -103,6 +141,17 @@ eval_sections = (
 missing_eval_sections = [section for section in eval_sections if section not in EVAL]
 if missing_eval_sections:
     raise SystemExit("Add the missing sections to eval.md: " + ", ".join(missing_eval_sections))
+
+required_files = (
+    ROOT / "scripts" / "slop_scan.py",
+    ROOT / "evals" / "run_evals.py",
+    ROOT / "evals" / "evals.json",
+)
+for required in required_files:
+    if not required.is_file():
+        raise SystemExit(f"Missing required file: {required.relative_to(ROOT)}")
+if not list((ROOT / "evals" / "fixtures").glob("*.md")):
+    raise SystemExit("Keep at least one fixture in evals/fixtures/")
 
 if len(SKILL.splitlines()) > 900:
     raise SystemExit("Keep SKILL.md at 900 lines or fewer")
