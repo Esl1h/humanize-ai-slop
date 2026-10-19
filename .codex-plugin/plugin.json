@@ -1,6 +1,6 @@
 {
   "name": "humanize-ai-slop",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Removes 41 patterns of AI writing from any draft without flattening the writer's voice.",
   "author": {
     "name": "Esl1h",

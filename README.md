@@ -288,6 +288,7 @@ If this skill saved you some work, leave a star. It helps other people find the 
 <details>
 <summary>Show release notes</summary>
 
+- **1.2.0** - Moves the pattern catalog to `references/patterns.md` and keeps a one-line checklist per pattern in SKILL.md, which cuts the skill to less than half its size. Detect reports end with a summary line, pasted-text edits return only the final rewrite and What changed, and pattern 40 gains an example. The scanner, now shared with Humanize BR, adds `fix` and `watch` severities, watched phrases, binary contrasts, emoji in list items, horizontal rules, and `--json`, and stops flagging quoted words, URLs, dates, and tokens like GPT-4. Adds negative controls, scanner unit tests, an agent eval runner, and a sync check with Humanize BR.
 - **1.1.0** - Adds two patterns from later Humanizer revisions, vague association and re-explaining what the reader knows, widens writing about the document and formatting slop, and renumbers the catalog to 41 patterns. Adds a defined detect report format, a pattern index in SKILL.md, a mechanical scanner (`scripts/slop_scan.py`), and an eval suite (`evals/`).
 - **1.0.0** - First release. Merges Humanizer (35 patterns) and No AI Slop (20+ patterns) into one English skill of 39 patterns, with a detect mode that does not rewrite, voice matching from a writing sample, a self-check list, and plugins for Claude Code and ChatGPT/Codex. Layout follows Humanize BR.
 
