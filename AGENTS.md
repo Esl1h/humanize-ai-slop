@@ -10,10 +10,13 @@ Keep the skill portable. Do not write instructions that limit it to one or two s
 
 ## Main files
 
-- `SKILL.md` is the source of truth and the only skill file in the repository. It contains portable YAML metadata, 41 numbered patterns with examples, and the rewrite process.
+- `SKILL.md` is the source of truth and the only skill file in the repository. It contains portable YAML metadata, the modes, the editing principles, the word lists, a one-line index of the 41 patterns, and the rewrite process.
+- `references/patterns.md` is the full pattern catalog: phrases to watch, the problem, and a before and after example for each pattern. The skill reads it on demand.
 - `eval.md` contains the self-check list the skill runs on its own work before returning the result.
-- `scripts/slop_scan.py` scans text for the mechanical patterns (banned words, dashes, decorated headings, mixed quotes, bold-label lists) and reads its word lists from `SKILL.md`.
-- `evals/` holds fixtures with planted patterns, golden rewrites, a grader (`run_evals.py`), and agent eval prompts (`evals.json`).
+- `scripts/slop_scan.py` scans text for the machine-checkable patterns, as `fix` or `watch` findings, and reads its word lists from `SKILL.md` and `references/patterns.md`.
+- `scripts/check-sync.py` checks that this repository and [Humanize BR](https://github.com/Esl1h/humanize-br) have not drifted apart.
+- `tests/` holds unit tests for the scanner.
+- `evals/` holds fixtures with planted patterns and negative controls, golden rewrites, the expected findings (`checks.json`), a grader (`run_evals.py`), agent eval prompts (`evals.json`), and an agent eval runner (`run_agent_evals.py`).
 - `README.md` explains installation, usage, patterns, and version history.
 - `.claude-plugin/plugin.json` describes the Claude Code plugin and points the skill loader at the root `SKILL.md`.
 - `.claude-plugin/marketplace.json` lets users add this repository as a Claude marketplace.
@@ -26,12 +29,15 @@ Keep the skill portable. Do not write instructions that limit it to one or two s
 
 Keep `SKILL.md`, `eval.md`, and `README.md` in sync.
 
-- **Patterns:** the skill has 41 numbered patterns in seven categories. When you add, remove, or renumber a pattern, update the README table, the pattern index in SKILL.md, the validator, the pattern numbers reported by `scripts/slop_scan.py`, and every reference to the pattern number.
+- **Patterns:** the skill has 41 numbered patterns in seven categories. When you add, remove, or renumber a pattern, update the catalog in `references/patterns.md`, the README table, the pattern index in SKILL.md, the validator, the pattern numbers reported by `scripts/slop_scan.py`, and every reference to the pattern number.
 - **Version:** keep the same version in `SKILL.md` under `metadata.version`, in the first version entry of the README, in `.claude-plugin/plugin.json`, and in `.codex-plugin/plugin.json`. Do not add a top-level `version` field to the skill.
 - **Compatibility:** keep installation and usage instructions neutral across agents. Names such as Claude Code, ChatGPT, and Codex are examples, not limits.
 - **History:** add a short version note to the README for every behavior change or non-obvious fix.
 - **Merging:** when a Humanizer pattern and a No AI Slop pattern describe the same habit, keep one numbered pattern and fold the second source's example or wording into it. Do not add a near-duplicate pattern.
-- **Checks:** before publishing, run `python3 scripts/validate-package.py` and `python3 evals/run_evals.py`.
+- **Shared files:** `scripts/slop_scan.py`, `scripts/check-sync.py`, `evals/run_evals.py`, and `evals/run_agent_evals.py` are identical in Humanize BR. Keep language-specific behavior in the scanner's `CONFIG` and in `evals/checks.json`, and copy any change to both repositories.
+- **Parity:** a structural change here (a section, a numbered step, a list item in SKILL.md or eval.md, an eval prompt) needs the same change in Humanize BR. `scripts/check-sync.py` catches the drift.
+- **Size:** keep SKILL.md short. Detail that the skill does not need on every run belongs in `references/`.
+- **Checks:** before publishing, run `python3 scripts/validate-package.py`, `python3 evals/run_evals.py`, `python3 -m unittest discover -s tests`, and `python3 scripts/check-sync.py`.
 
 ## Writing style
 

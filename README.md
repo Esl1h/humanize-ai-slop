@@ -96,30 +96,43 @@ https://github.com/Esl1h/humanize-ai-slop
 
 **In Claude Desktop**, download this repository as a ZIP and upload it as a skill.
 
-**Manual install:** copy `SKILL.md` and `eval.md` into your agent's skill folder, plus `scripts/` if you want the mechanical scanner.
+**Manual install:** copy `SKILL.md`, `eval.md`, and `references/` into your agent's skill folder, plus `scripts/` if you want the mechanical scanner.
 
 ## The mechanical scanner
 
-The repo bundles `scripts/slop_scan.py`, a dependency-free scanner for the checks a machine can make: banned words, em and en dashes, decorated headings, mixed quote styles, bold-label lists, and stacked hyphen pairs. It reads its word lists from `SKILL.md`, so it never drifts from the skill. The rhetorical patterns still need the model.
+The repo bundles `scripts/slop_scan.py`, a dependency-free scanner for the checks a machine can make. It reports two severities:
+
+- `fix`: banned words, em and en dashes, bold-label lists, title case headings, emoji in headings and list items, mixed quote styles, and stacked hyphen pairs. The skill always removes these.
+- `watch`: binary contrasts, emoji in body text, horizontal rules, and the watched phrases of the catalog (chatbot leftovers, faux-insight setups, filler, vague sources, and others). These are often slop but need a look at the context.
+
+It reads its word lists from `SKILL.md` and `references/patterns.md`, so it never drifts from the skill. It skips code, YAML metadata, link targets, URLs, and text inside quotation marks. The rhetorical patterns still need the model. The same scanner ships in [Humanize BR](https://github.com/Esl1h/humanize-br) and picks the language from `SKILL.md`.
 
 ```bash
 python3 scripts/slop_scan.py docs/launch-post.md   # list findings with pattern numbers
 python3 scripts/slop_scan.py - < draft.txt         # scan stdin
-python3 scripts/slop_scan.py clean.md --strict     # exit 1 on any finding
+python3 scripts/slop_scan.py draft.md --json       # findings as JSON
+python3 scripts/slop_scan.py clean.md --strict     # exit 1 on any fix finding
 ```
 
 The skill runs the scanner in detect mode and after file edits whenever it is installed with the repo.
 
 ## Tests
 
-`evals/` holds fixtures with planted patterns, golden rewrites, and a grader:
+`evals/` holds fixtures with planted patterns, negative controls of human prose, golden rewrites, and a grader. `evals/checks.json` sets what each fixture must produce. `tests/` holds unit tests for the scanner:
 
 ```bash
 python3 evals/run_evals.py                                          # self-checks (CI)
 python3 evals/run_evals.py --grade evals/fixtures/shellmate.md out.md
+python3 -m unittest discover -s tests                               # scanner unit tests (CI)
 ```
 
-`evals/evals.json` lists prompts and assertions for running the full skill with an agent. CI runs the self-checks on every push.
+`evals/evals.json` lists prompts and assertions for running the full skill with an agent. `evals/run_agent_evals.py` runs them through any agent CLI that reads a prompt on stdin, grades the edits mechanically, and, with `--judge`, asks a second command to check each assertion:
+
+```bash
+python3 evals/run_agent_evals.py --agent "claude -p" --judge "claude -p"
+```
+
+CI runs the self-checks and unit tests on every push, and checks that the shared files still match Humanize BR.
 
 ## The 41 patterns
 
@@ -199,7 +212,7 @@ python3 evals/run_evals.py --grade evals/fixtures/shellmate.md out.md
 | 40 | **Formatting slop** | emoji headings, decorative bold, bullets for two sentences | Format follows the content |
 | 41 | **Faux-insight setups** | "Here's what nobody tells you: ..." | Cut the setup, keep the claim |
 
-Every pattern has a full example, its caveats, and an explanation in [`SKILL.md`](SKILL.md). The self-check list the skill runs on its own work is in [`eval.md`](eval.md).
+Every pattern has a full example, its caveats, and an explanation in [`references/patterns.md`](references/patterns.md). [`SKILL.md`](SKILL.md) keeps a one-line summary of each, so the skill loads the full catalog only when it needs it. The self-check list the skill runs on its own work is in [`eval.md`](eval.md).
 
 ## Full example
 
