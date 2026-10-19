@@ -1,0 +1,15 @@
+{
+  "fixtures": {
+    "shellmate.md": {"min": {"banned": 2, "dash": 1, "bold_label": 3, "decoration": 3, "contrast": 2, "phrase": 3}},
+    "museum.md": {"min": {"banned": 2, "dash": 1, "title_case": 1, "mixed_quotes": 1, "phrase": 1}},
+    "reply.md": {"control": true, "min": {"phrase": 2}},
+    "control-essay.md": {"control": true, "max_watch": 0}
+  },
+  "golden": {
+    "shellmate-after.md": {
+      "input": "shellmate.md",
+      "summary_heading": "What changed",
+      "keep": ["Shellmate", "GPU", "theme", "plugin"]
+    }
+  }
+}
