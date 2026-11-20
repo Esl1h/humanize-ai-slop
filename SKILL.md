@@ -11,7 +11,7 @@ description: |
   humanize-br.
 license: MIT
 metadata:
-  version: "1.2.0"
+  version: "1.2.1"
 ---
 
 # Humanize AI Slop: remove AI writing patterns
